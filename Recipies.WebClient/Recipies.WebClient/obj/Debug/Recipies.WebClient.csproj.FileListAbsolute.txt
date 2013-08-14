@@ -1,0 +1,5 @@
+C:\Users\Elena\Documents\GitHub\RecipiesConsumer\Recipies.WebClient\Recipies.WebClient\bin\Recipies.WebClient.dll
+C:\Users\Elena\Documents\GitHub\RecipiesConsumer\Recipies.WebClient\Recipies.WebClient\bin\Recipies.WebClient.pdb
+C:\Users\Elena\Documents\GitHub\RecipiesConsumer\Recipies.WebClient\Recipies.WebClient\obj\Debug\Recipies.WebClient.csprojResolveAssemblyReference.cache
+C:\Users\Elena\Documents\GitHub\RecipiesConsumer\Recipies.WebClient\Recipies.WebClient\obj\Debug\Recipies.WebClient.dll
+C:\Users\Elena\Documents\GitHub\RecipiesConsumer\Recipies.WebClient\Recipies.WebClient\obj\Debug\Recipies.WebClient.pdb

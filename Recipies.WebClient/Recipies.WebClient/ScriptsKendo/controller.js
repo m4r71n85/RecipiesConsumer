@@ -6,16 +6,20 @@
 /// <reference path="notify.js" />
 
 var controllers = (function () {
-	var rootUrl = "http://localhost:40643/api/";
+    var rootUrl = "http://recepies-1.apphb.com/api/";
 	var Controller = Class.create({
 		init: function () {
 		    this.provider = providers.get(rootUrl);
 		    
-			if (this.provider.isUserLoggedIn()) {
+			//if (this.provider.isUserLoggedIn()) {
+			//    this.loadGame("#panelbar");
+			//}
+			//else {
+			//    this.loadLogin("#kwindow");
+			//}
+
+			if (true) {
 			    this.loadGame("#panelbar");
-			}
-			else {
-			    this.loadLogin("#kwindow");
 			}
 		},
 		loadLogin: function (selector) {
@@ -45,7 +49,7 @@ var controllers = (function () {
 		        panelBar.expand(item);
 		    });
 
-		    this.loadMessages();
+		    //this.loadMessages();
 		},
 		loadOpenGames:function() {
 		    this.provider.game.open().then(function (result) {
@@ -142,11 +146,11 @@ var controllers = (function () {
 		        });
 		    });
 
-		    $('#organizer').on('click', '#btnCreateNewGame', function () {
+		    $('#organizer').on('click', '#btnCreateNewRecipie', function () {
 		        createKendoWindow("Create New Game", "CreateGame").center().open();
 		    });
 		    
-		    $('#organizer').on('click', '#btnReadAllMessages', function () {
+		    $('#organizer').on('click', '#btnReadAllRecipies', function () {
 		        self.provider.message.all().then(function (result) {
 		            for (var i = 0; i < result.length; i++) {
 		                var content = 'text: ' + result[i].text +

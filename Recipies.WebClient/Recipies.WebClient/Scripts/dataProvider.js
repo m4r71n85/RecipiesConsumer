@@ -39,7 +39,7 @@ var providers = (function () {
 	});
 	var UserProvider = Class.create({
 		init: function (serviceUrl) {
-			this.serviceUrl = serviceUrl + "user/";
+			this.serviceUrl = serviceUrl + "users";
 		},
 		login: function (username, password) {
 			var url = this.serviceUrl + "login";
@@ -75,12 +75,12 @@ var providers = (function () {
 		    }, error);
 		},
 		scores: function () {
-		    return httpRequester.getJSON(this.serviceUrl + "scores/" + sessionKey);
+		    return httpRequester.getJSON(this.serviceUrl);
 		}
 	});
 	var GameProvider = Class.create({
 	    init: function (serviceUrl) {
-	        this.serviceUrl = serviceUrl + "game/";
+	        this.serviceUrl = serviceUrl + "users";
 	    },
 	    create: function (title, password, number) {
 	        var hash = CryptoJS.SHA1(password).toString();
@@ -110,7 +110,7 @@ var providers = (function () {
 	        return httpRequester.getJSON(this.serviceUrl + "/" + gameId + "/start/" + sessionKey);
 	    },
 	    open: function () {
-	        return httpRequester.getJSON(this.serviceUrl + "open/" + sessionKey);
+	        return httpRequester.getJSON(this.serviceUrl);
 	    },
 	    active: function () {
 	        return httpRequester.getJSON(this.serviceUrl + "my-active/" + sessionKey);
