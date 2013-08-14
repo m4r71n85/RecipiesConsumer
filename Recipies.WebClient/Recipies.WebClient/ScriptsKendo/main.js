@@ -10,7 +10,7 @@ $(document).ready(function() {
     }).data("kendoPanelBar");
 
     controller = controllers.get();
-    
+    controller.provider.user.scores();
  
     function onSelect(e) {
         selectedGameId = $(e.item)[0].id;
