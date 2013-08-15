@@ -10,7 +10,7 @@ $(document).ready(function () {
     var kendoGrid = $("#grid").kendoGrid({
 
         columns: [
-            { field: "RecipieID", title: "RecipieID", width: "1px" },
+            { field: "RecipieID", title: "RecipieID", template: "#=RecipyID #", width: "1px" },
             { field: "Name", title: "Recipie Name", width: "200px" },
              {
                  field: "Rating", title: "Rating", width: "200px", template:
