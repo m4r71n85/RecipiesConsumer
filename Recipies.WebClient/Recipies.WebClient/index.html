@@ -39,7 +39,7 @@
     <script>(function () {
         // LISTEN
         pubnub.subscribe({
-            channel: "saykor_bulls_cows",
+            channel: "recipies-chanell",
             message: function (m) {
                 if (m.message === "new-recipie") {
                     if (m.user !== controller.provider.nickname()) {

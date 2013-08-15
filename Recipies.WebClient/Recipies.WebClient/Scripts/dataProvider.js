@@ -48,11 +48,11 @@ var providers = (function () {
             };
 
             return httpRequester.postJSON(url, userData).then(function (result) {
-                result.NickName = username;
                 saveSession(result);
                 location.reload();
             }, function (error) {
-                console.log(error.responseText);
+                console.log("An error occured: " + error.responseText);
+                alert("An error occured: " + error.responseText);
                 location.reload();
             });
         },
@@ -69,8 +69,8 @@ var providers = (function () {
                 
                 location.reload();
             }, function (error) {
-                alert(url);
-                //location.reload();
+                alert("An error occured: " + error.responseText);
+                location.reload();
                
             });
         },
