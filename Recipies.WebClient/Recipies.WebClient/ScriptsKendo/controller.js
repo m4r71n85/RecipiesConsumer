@@ -25,7 +25,7 @@ var controllers = (function () {
             $("#LogBtn").html("Sign in");
             $("#LogBtn").on("click", function () {
                 
-                    location.reload();
+              location.reload();
                
             });
         },
@@ -39,14 +39,12 @@ var controllers = (function () {
                     console.log("created:", result);
                     location.reload();
                 }, function (error) {
+                    location.reload();
                     alert(error.responseText);
                 });
             });
 
-            $("#LogBtn").html("LogOut");
-
-           
-            //this.loadMessages();
+            $("#LogBtn").html("LogOut");     
         },
 
         attachLoginEventHandlers: function (selector) {
@@ -55,9 +53,12 @@ var controllers = (function () {
             kwindow.on('click', '#btnLogin', function () {
                 var username = $('#txtLoginUsername').val();
                 var password = $('#txtLoginPassword').val();
-                self.provider.user.login(username, password).then(function () {
-                    kwindow.data("kendoWindow").close();
-                    self.loadrecipie("#panelbar");
+                self.provider.user.login(username, password).then(function (result) {
+                    console.log("created:", result);
+                    location.reload();
+                }, function (error) {
+                    location.reload();
+                    alert(error.responseText);
                 });
             });
 
@@ -65,9 +66,12 @@ var controllers = (function () {
                 var username = $('#txtRegisterUsername').val();
                 var nickname = $('#txtRegisterNickname').val();
                 var password = $('#txtRegisterPassword').val();
-                self.provider.user.register(username, nickname, password).then(function () {
-                    kwindow.data("kendoWindow").close();
-                    self.loadrecipie("#panelbar");
+                self.provider.user.register(username, nickname, password).then(function (result) {
+                    location.reload();
+
+                }, function (error) {
+                    alert(error.responseText);
+
                 });
             });
         },

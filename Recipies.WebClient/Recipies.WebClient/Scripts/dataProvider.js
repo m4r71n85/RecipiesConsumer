@@ -48,11 +48,12 @@ var providers = (function () {
             };
 
             return httpRequester.postJSON(url, userData).then(function (result) {
-                result.NickName = nickname;
+                result.NickName = username;
                 saveSession(result);
                 location.reload();
             }, function (error) {
                 console.log(error.responseText);
+                location.reload();
             });
         },
         register: function (username, nickname, password) {
@@ -68,7 +69,9 @@ var providers = (function () {
                 
                 location.reload();
             }, function (error) {
-                console.log(error.responseText);
+                alert(url);
+                //location.reload();
+               
             });
         },
         logout: function (success, error) {
