@@ -28,26 +28,6 @@ var controllers = (function () {
 		},
 		loadGame: function () {
 		    this.attachGameEventHandlers("#kwindow");
-		    $("#organizer").show();
-
-		    this.loadOpenGames();
-
-		    this.provider.game.active().then(function (result) {
-		        for (var i = 0; i < result.length; i++) {
-		            games.push(result[i]);
-		            if (result[i].status === "full") {
-		                panelBar.select(getItemByIndex(1));
-		                panelBar.append('<li id="' + result[i].id + '" class="k-link">' + result[i].title + '</li>', panelBar.select());
-		            } else {
-		                panelBar.select(getItemByIndex(2));
-		                panelBar.append('<li id="' + result[i].id + '" class="k-link">' + result[i].title + '</li>', panelBar.select());
-		            }
-		        }
-		    }).then(function () {
-		        var item = getItemByIndex(0);
-		        panelBar.select(item);
-		        panelBar.expand(item);
-		    });
 
 		    //this.loadMessages();
 		},
@@ -63,36 +43,6 @@ var controllers = (function () {
 		        }
 		        panelBar.expand(panelBar.select(getItemByIndex(0)));
 		    });
-		},
-		loadMessages: function () {
-		    var self = this;
-		    //load messages
-
-		    setInterval(function () {
-		        console.log('message');
-		        self.provider.message.unread().then(function (result) {
-		            for (var i = 0; i < result.length; i++) {
-		                var content = 'text: ' + result[i].text +
-		                    '<br />gameId: ' + result[i].gameId +
-		                    '<br />type: ' + result[i].type +
-		                    '<br />state: ' + result[i].state;
-		                var nofyType = 'alert';
-		                if (result[i].type === "guess-made") {
-		                    var game = findById(games, result[i].gameId);
-		                    console.log(game);
-		                    if (game !== undefined && game.button !== undefined) {
-		                        game.button.removeAttr("disabled");
-		                        game.button.css('background', '#61FF73');
-		                    }
-		                    nofyType = 'information';
-		                } else {
-		                    content += '<br />Click OK if you are ready to play';
-		                }
-		                
-		                notify.create(content, result[i].gameId, result[i].type, result[i].state, null, nofyType);
-		            }
-		        });
-		    }, 2000);
 		},
 		attachLoginEventHandlers: function (selector) {
 		    var self = this;
@@ -129,7 +79,6 @@ var controllers = (function () {
 		            alert(error.responseText);
 		        });
 		    });
-
 		    kwindow.on('click', '#btnCreateGame', function () {
 		        var title = $('#txtCreateGameName').val();
 		        var password = $('#txtCreateGamePassword').val();
@@ -146,10 +95,42 @@ var controllers = (function () {
 		        });
 		    });
 
-		    $('#organizer').on('click', '#btnCreateNewRecipie', function () {
+		    kwindow.on('click', '#btnAddStep', function () {
+		        $('#addedSteps').append($("<p>" + $('#txtCreateRecipieStep').val() + "</p>"));
+		    });
+
+		    kwindow.on('click', '#btnDeleteAllSteps', function () {
+		        $('#addedSteps').html("");
+		    });
+
+		    kwindow.on('click', '#btnCreateGame', function () {
+		        var name = $('#txtCreateRecipie').val();
+		        var description = $('#txtCreateRecipieDescription').val();
+		        
+
+		        var step = [];
+		        var nextChild = $('#addedSteps').next() ;
+		        while (nextChild  != null) {
+
+		            step.push(nextChild.text());
+                    nextChild = $('#addedSteps').next();
+		        }
+
+		        self.provider.game.create(title, password, number).then(function (result) {
+		            kwindow.data("kendoWindow").close();
+		            var data = {
+		                message: "new-game",
+		                user: self.provider.nickname()
+		            };
+		            pubnubPublish(data);
+		        }, function (error) {
+		            alert(error.responseText);
+		        });
+		    });
+
+		    $('#wrapper').on('click', '#btnCreateNewRecipie', function () {
 		        createKendoWindow("Create New Game", "CreateGame").center().open();
 		    });
-		    
 		    $('#organizer').on('click', '#btnReadAllRecipies', function () {
 		        self.provider.message.all().then(function (result) {
 		            for (var i = 0; i < result.length; i++) {

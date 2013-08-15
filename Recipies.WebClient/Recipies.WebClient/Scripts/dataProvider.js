@@ -26,8 +26,7 @@ var providers = (function () {
 			this.serviceUrl = serviceUrl;
 			this.user = new UserProvider(this.serviceUrl);
 			this.game = new GameProvider(this.serviceUrl);
-			this.message = new MessagesProvider(this.serviceUrl);
-			this.guess = new GuessProvider(this.serviceUrl);
+			
 		},
 		isUserLoggedIn: function () {
 			var isLoggedIn = nickname != null && sessionKey != null;
@@ -73,17 +72,15 @@ var providers = (function () {
 		        clearSession();
 		        success(data);
 		    }, error);
-		},
-		scores: function () {
-		    return httpRequester.getJSON(this.serviceUrl);
 		}
 	});
+
 	var GameProvider = Class.create({
 	    init: function (serviceUrl) {
 	        this.serviceUrl = serviceUrl + "recipies";
 	    },
-	    create: function (title, password, number) {
-	        var hash = CryptoJS.SHA1(password).toString();
+	    create: function (name, description, steps, ImageUrl) {
+	       
 
 	        var url = this.serviceUrl + "create/" + sessionKey;
 	        var data = {
@@ -124,35 +121,7 @@ var providers = (function () {
 	}
 	});
 
-	var GuessProvider = Class.create({
-	    init: function (serviceUrl) {
-	        this.serviceUrl = serviceUrl + "guess/";
-	    },
-
-	    make: function (gameId, number) {
-	        var data = {
-	            gameId: gameId,
-	            number: number
-	        };
-	        return httpRequester.postJSON(this.serviceUrl + "make/" + sessionKey, data);
-	    }
-
-	});
-
-	var MessagesProvider = Class.create({
-	    init: function (serviceUrl) {
-	        this.serviceUrl = serviceUrl + "messages/";
-	    },
-
-	    unread: function () {
-	        return httpRequester.getJSON(this.serviceUrl + "unread/" + sessionKey);
-	    },
-
-	    all: function () {
-	        return httpRequester.getJSON(this.serviceUrl + "all/" + sessionKey);
-	    }
-
-	});
+	
 	return {
 		get: function (url) {
 			return new BaseProvider(url);

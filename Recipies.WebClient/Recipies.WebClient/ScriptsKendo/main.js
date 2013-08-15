@@ -12,37 +12,6 @@ $(document).ready(function() {
     controller = controllers.get();
 
 
-    var someData = [
-                    {
-                        Name: "Some Recipie",
-                        Rating: 3,
-                        Picture: "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash3/1016634_10200523468746377_1642176731_n.jpg",
-                        CookingMinutes: 5,
-                        CreatedBy: "SomeOne"
-                    },
-                    {
-                        Name: "Some Recipie",
-                        Rating: 3,
-                        Picture: "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash3/1016634_10200523468746377_1642176731_n.jpg",
-                        CookingMinutes: 5,
-                        CreatedBy: "SomeOne"
-                    },
-                    {
-                        Name: "Some Recipie",
-                        Rating: 3,
-                        Picture: "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash3/1016634_10200523468746377_1642176731_n.jpg",
-                        CookingMinutes: 5,
-                        CreatedBy: "SomeOne"
-                    },
-                    {
-                        Name: "Some Recipie",
-                        Rating: 3,
-                        Picture: "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash3/1016634_10200523468746377_1642176731_n.jpg",
-                        CookingMinutes: 5,
-                        CreatedBy: "SomeOne"
-                    },
-    ];
-
     var kendoGrid = $("#grid").kendoGrid({
        
         columns: [
@@ -61,21 +30,21 @@ $(document).ready(function() {
 									'<div class="qa-vote-clear">' +
 									'</div>' +
 								'</div>'  },
-             { field: "Picture", title: "Picture", template: "<img src='#=Picture # 'width= '150px' height: '150px' />"},
+             { field: "ImagesFolder", title: "ImagesFolder", template: "<img src='#=ImagesFolder #  alt='NO IMAGE Available' width= '150px' height: '150px' />"},
             { field: "CookingMinutes", title: "Time For Preperation in minutes", width: "200px" },
            { field: "CreatedBy", title: "Created By", width: "100px" }
         ],
         dataSource: {
-            data: someData
+            transport: {
+                read: "http://localhost:54081/api/recipies",
+                pageSize: 5
+            },
+            width: 350,
+            pageable: true
+          
         }
     });
 
-    var dataFromDB =  controller.provider.game.allRecipies().then(function (result) {
-
-        console.log(result);
-        });
-
-   
 
     function onSelect(e) {
         selectedGameId = $(e.item)[0].id;
