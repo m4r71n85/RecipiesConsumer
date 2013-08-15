@@ -84,9 +84,25 @@ var providers = (function () {
 
 	        var url = this.serviceUrl + "create/" + sessionKey;
 	        var data = {
-	            title: title,
-	            password: hash,
-	            number: number
+	            
+                        "Name": "sample string 2",
+	                "Description": "sample string 4",
+	                "ImagesFolderUrl": "sample string 5",
+	                "Steps": [
+                        {
+                            "PreparationTime": "00:00:00.1234567",
+                            "Description": "sample string 4"
+                        },
+                        {
+                            "PreparationTime": "00:00:00.1234567",
+                            "Description": "sample string 4"
+                        },
+                        {
+                            "PreparationTime": "00:00:00.1234567",
+                            "Description": "sample string 4"
+                        }
+	                ]
+	            
 	        };
 	        return httpRequester.postJSON(url, data);
 	    },
