@@ -6,17 +6,17 @@
 /// <reference path="notify.js" />
 
 var controllers = (function () {
-	var rootUrl = "http://recepies-1.apphb.com/";
+	var rootUrl = "http://localhost:54081/";
 	var Controller = Class.create({
 		init: function () {
 		    this.provider = providers.get(rootUrl);
 		    
-			//if (this.provider.isUserLoggedIn()) {
-			//    this.loadGame("#panelbar");
-			//}
-			//else {
-			//    this.loadLogin("#kwindow");
-			//}
+			if (this.provider.isUserLoggedIn()) {
+			    this.loadGame("#panelbar");
+			}
+			else {
+			    this.loadLogin("#kwindow");
+			}
 
 			if (true) {
 			    this.loadGame("#panelbar");
@@ -44,6 +44,7 @@ var controllers = (function () {
 		        panelBar.expand(panelBar.select(getItemByIndex(0)));
 		    });
 		},
+
 		attachLoginEventHandlers: function (selector) {
 		    var self = this;
 		    var kwindow = $(selector);
