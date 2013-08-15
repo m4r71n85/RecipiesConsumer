@@ -96,7 +96,7 @@ var controllers = (function () {
 		    });
 
 		    kwindow.on('click', '#btnAddStep', function () {
-		        $('#addedSteps').append($("<p>" + $('#txtCreateRecipieStep').val() + "</p>"));
+		        $('#addedSteps').append($("<p>" + '|Step|' + $('#txtCreateRecipieStep').val() + '||Time|' + $('#txtCreateRecipieStepTime').val() + "</p>"));
 		    });
 
 		    kwindow.on('click', '#btnDeleteAllSteps', function () {
@@ -106,23 +106,35 @@ var controllers = (function () {
 		    kwindow.on('click', '#btnCreateGame', function () {
 		        var name = $('#txtCreateRecipie').val();
 		        var description = $('#txtCreateRecipieDescription').val();
-		        
+		        var imageUrl = $('#txtCreateRecipieDescription').val();
 
 		        var step = [];
 		        var nextChild = $('#addedSteps').next() ;
 		        while (nextChild  != null) {
 
-		            step.push(nextChild.text());
-                    nextChild = $('#addedSteps').next();
+		            var stepElementsArray = nextChild.val().replace('|Step|', " ").replace('|Time|').split('|');
+		            var stepForSend = {
+		                PreparationTime: stepElementsArray[1],
+		                Description: stepElementsArray[0]
+		            }
+
+		            step.push(stepForSend);
+
+		            nextChild.Remove();
+
+		            nextChild = $('#addedSteps').next();
+
+
 		        }
 
-		        self.provider.game.create(title, password, number).then(function (result) {
+		        self.provider.game.create(name, description, step, imageUrl).then(function (result) {
 		            kwindow.data("kendoWindow").close();
-		            var data = {
-		                message: "new-game",
-		                user: self.provider.nickname()
-		            };
-		            pubnubPublish(data);
+		            //var data = {
+		            //    message: "new-game",
+		            //    user: self.provider.nickname()
+		            //};
+		            //pubnubPublish(data);
+		            console.log("created:", result);
 		        }, function (error) {
 		            alert(error.responseText);
 		        });

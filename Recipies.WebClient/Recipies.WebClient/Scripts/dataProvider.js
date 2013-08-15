@@ -82,26 +82,13 @@ var providers = (function () {
 	    create: function (name, description, steps, ImageUrl) {
 	       
 
-	        var url = this.serviceUrl + "create/" + sessionKey;
+	        var url = this.serviceUrl + "?sessionKey=" + "0000000000000000000000000000000000000000";
 	        var data = {
 	            
-                        "Name": "sample string 2",
-	                "Description": "sample string 4",
-	                "ImagesFolderUrl": "sample string 5",
-	                "Steps": [
-                        {
-                            "PreparationTime": "00:00:00.1234567",
-                            "Description": "sample string 4"
-                        },
-                        {
-                            "PreparationTime": "00:00:00.1234567",
-                            "Description": "sample string 4"
-                        },
-                        {
-                            "PreparationTime": "00:00:00.1234567",
-                            "Description": "sample string 4"
-                        }
-	                ]
+	                     Name: name,
+	                     Description: description,
+	                     Steps: steps,
+	                     ImagesFolderUrl: ImageUrl
 	            
 	        };
 	        return httpRequester.postJSON(url, data);
