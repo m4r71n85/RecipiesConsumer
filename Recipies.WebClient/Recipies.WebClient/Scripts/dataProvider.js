@@ -5,7 +5,7 @@
 
 var providers = (function () {
     var nickname = "pesho"//localStorage.getItem("nickname");
-    var sessionKey = "0000000000000000000000000000000000000000";
+    var sessionKey = "D743981A9002BAB63E0A229E6C7BAF51EEC5AE10";
 
     function saveSession(userData) {
         localStorage.setItem("nickname", userData.nickname);
@@ -82,7 +82,7 @@ var providers = (function () {
         create: function (name, description, steps, ImageUrl) {
 
 
-            var url = this.serviceUrl + "?sessionKey=" + "0000000000000000000000000000000000000000";
+            var url = this.serviceUrl + "?sessionKey=" + sessionKey;
             var data = {
 
                 Name: name,

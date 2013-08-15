@@ -4,11 +4,6 @@
 
 $(document).ready(function () {
 
-    //panelBar = $("#panelbar").kendoPanelBar({
-    //    expandMode: "single",
-    //    select: onSelect,
-    //}).data("kendoPanelBar");
-
     controller = controllers.get();
 
 

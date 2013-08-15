@@ -57,6 +57,7 @@ var controllers = (function () {
         attachGameEventHandlers: function (selector) {
             var self = this;
             var kwindow = $(selector);
+            var recipi
             //kwindow.on('click', '#btnJoinGame', function () {
             //    var password = $('#txtJoinGamePassword').val();
             //    var number = $('#txtJoinGameNumber').val();
@@ -70,7 +71,10 @@ var controllers = (function () {
 
             //ADD Step to the new recipie
             kwindow.on('click', '#btnAddStep', function () {
-                $('#addedSteps').append($("<p>" + '|Step|' + $('#txtCreateRecipieStep').val() + '||Time|' + $('#txtCreateRecipieStepTime').val() + "</p>"));
+                $('#addedSteps').append($("<p>" + '|Step| <span class="step">' + $('#txtCreateRecipieStep').val() + '</span> ||Time| <span class="time">' + $('#txtCreateRecipieStepTime').val().trim() + "</span></p>"));
+                $('#txtCreateRecipieStep').val("");
+                $('#txtCreateRecipieStepTime').val("")
+
             });
 
             //DELETE steps
@@ -80,30 +84,27 @@ var controllers = (function () {
 
             //Create New recipie
             kwindow.on('click', '#btnCreateRecipie', function () { // in kendo window CreateRecipeie
-                var name = $('#txtCreateRecipie').val();
+                var name = $('#txtCreateRecipieName').val();
                 var description = $('#txtCreateRecipieDescription').val();
-                var imageUrl = $('#txtCreateRecipieDescription').val();
+                var imageUrl = $('#ImageRecipierUrl').val();
 
-                var step = [];
-                var nextChild = $('#addedSteps').next();
-                while (nextChild != null) {
+                var stepsCollection = [];
+                var steps = $('#addedSteps').children();
 
-                    var stepElementsArray = nextChild.text().replace('|Step|', " ").replace('|Time|').split('|');
+                for (var i = 0; i < steps.length; i++) {
+
+                    var stepVal = $(steps[i]).find("span.step").html();
+                    var timeVal = $(steps[i]).find("span.time").html();
                     var stepForSend = {
-                        PreparationTime: stepElementsArray[1],
-                        Description: stepElementsArray[0]
+                        PreparationTime: parseFloat(timeVal),
+                        Description: stepVal
                     }
 
-                    step.push(stepForSend);
-
-                    nextChild.Remove();
-
-                    nextChild = $('#addedSteps').next();
-
-
+                    stepsCollection.push(stepForSend);
                 }
 
-                self.provider.game.create(name, description, step, imageUrl).then(function (result) {
+
+                self.provider.game.create(name, description, stepsCollection, imageUrl).then(function (result) {
                     kwindow.data("kendoWindow").close();
                     //var data = {
                     //    message: "new-game",
@@ -111,6 +112,7 @@ var controllers = (function () {
                     //};
                     //pubnubPublish(data);
                     console.log("created:", result);
+
                 }, function (error) {
                     alert(error.responseText);
                 });
