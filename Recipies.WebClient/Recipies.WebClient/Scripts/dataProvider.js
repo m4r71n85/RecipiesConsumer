@@ -80,7 +80,7 @@ var providers = (function () {
 	});
 	var GameProvider = Class.create({
 	    init: function (serviceUrl) {
-	        this.serviceUrl = serviceUrl + "users";
+	        this.serviceUrl = serviceUrl + "recipies";
 	    },
 	    create: function (title, password, number) {
 	        var hash = CryptoJS.SHA1(password).toString();
@@ -117,7 +117,11 @@ var providers = (function () {
 	    },
 	    state: function (gameId) {
 	        return httpRequester.getJSON(this.serviceUrl + "/" + gameId + "/state/" + sessionKey);
-	    }
+	    },
+
+	    allRecipies: function (gameId) {
+	    return httpRequester.getJSON(this.serviceUrl);
+	}
 	});
 
 	var GuessProvider = Class.create({

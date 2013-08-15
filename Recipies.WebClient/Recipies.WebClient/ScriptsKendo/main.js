@@ -9,77 +9,73 @@ $(document).ready(function() {
     //    select: onSelect,
     //}).data("kendoPanelBar");
 
+    controller = controllers.get();
+
+
     var someData = [
                     {
-                        RecipieName: "Some Recipie",
+                        Name: "Some Recipie",
                         Rating: 3,
-                        Url: "www.dajda.com",
-                        TimeForPreperation: 5,
+                        Picture: "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash3/1016634_10200523468746377_1642176731_n.jpg",
+                        CookingMinutes: 5,
                         CreatedBy: "SomeOne"
                     },
                     {
-                        RecipieName: "Some Recipie",
+                        Name: "Some Recipie",
                         Rating: 3,
-                        Url: "www.dajda.com",
-                        TimeForPreperation: 5,
+                        Picture: "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash3/1016634_10200523468746377_1642176731_n.jpg",
+                        CookingMinutes: 5,
                         CreatedBy: "SomeOne"
                     },
                     {
-                        RecipieName: "Some Recipie",
+                        Name: "Some Recipie",
                         Rating: 3,
-                        Url: "www.dajda.com",
-                        TimeForPreperation: 5,
+                        Picture: "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash3/1016634_10200523468746377_1642176731_n.jpg",
+                        CookingMinutes: 5,
                         CreatedBy: "SomeOne"
                     },
                     {
-                        RecipieName: "Some Recipie",
+                        Name: "Some Recipie",
                         Rating: 3,
-                        Url: "www.dajda.com",
-                        TimeForPreperation: 5,
+                        Picture: "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-ash3/1016634_10200523468746377_1642176731_n.jpg",
+                        CookingMinutes: 5,
                         CreatedBy: "SomeOne"
                     },
     ];
 
-    $("#grid").kendoGrid({
-        dataSource: {
-            data:
-                
-                someData
-            ,
-            schema: {
-                model: {
-                    fields: {
-                        RecipieName: { type: "string" },
-                        Rating: { type: "number" },
-                        Url: { type: "string" },
-                        TimeForPreperation: { type: "number" },
-                        CreatedBy: { type: "string" }
-                    }
-                }
-            },
-            pageSize: 5
-        },
-        height: 430,
-        scrollable: true,
-        sortable: true,
-        filterable: true,
-        pageable: {
-            input: true,
-            numeric: false
-        },
+    var kendoGrid = $("#grid").kendoGrid({
+       
         columns: [
-            { field: "RecipieName", title: "Recipie Name", width: "100px" },
-            "Rating",
-            "Url",
-            { field: "TimeForPreperation", title: "Time For Preperation in minutes", width: "50px" },
+            { field: "Name", title: "Recipie Name", width: "200px" },
+             { field: "Rating", title: "Rating", width: "200px", template: 
+                 '<div class="qa-voting qa-voting-net" id="voting_113454">'+
+									'<div class="qa-vote-buttons qa-vote-buttons-net">'+
+										'<input title="Click to vote up" name="vote_113454_1_a113454" onclick="return qa_vote_click(this);" type="submit" value="+" class="qa-vote-first-button qa-vote-up-button" onmouseover="this.className="qa-vote-first-button qa-vote-up-hover"/> ' +
+										'<input title="Click to vote down" name="vote_113454_-1_a113454" onclick="return qa_vote_click(this);" type="submit" value="–" class="qa-vote-second-button qa-vote-down-button" onmouseover="this.className="qa-vote-second-button qa-vote-down-hover">' +
+									'</div>' +
+									'<div class="qa-vote-count qa-vote-count-net">' +
+										'<span class="qa-netvote-count">' +
+											'<span class="qa-netvote-count-data">#=Rating #<span class="votes-up"><span class="value-title" title="0"></span></span><span class="votes-down"><span class="value-title" title="0"></span></span></span><span class="qa-netvote-count-pad"> votes</span>' +
+										'</span>' +
+									'</div>' +
+									'<div class="qa-vote-clear">' +
+									'</div>' +
+								'</div>'  },
+             { field: "Picture", title: "Picture", template: "<img src='#=Picture # 'width= '150px' height: '150px' />"},
+            { field: "CookingMinutes", title: "Time For Preperation in minutes", width: "200px" },
            { field: "CreatedBy", title: "Created By", width: "100px" }
         ],
         dataSource: {
             data: someData
         }
     });
-    controller = controllers.get();
-    controller.provider.user.scores();
+
+    var dataFromDB =  controller.provider.game.allRecipies().then(function (result) {
+
+        console.log(result);
+        });
+
+   
 
     function onSelect(e) {
         selectedGameId = $(e.item)[0].id;
