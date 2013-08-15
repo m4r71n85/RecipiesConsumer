@@ -60,7 +60,7 @@
     <Content Include="Images\orgFoot.png" />
     <Content Include="Images\orgHead.png" />
     <Content Include="Images\sprite.png" />
-    <Content Include="indexKendo.html" />
+    <Content Include="index.html" />
     <Content Include="ScriptsKendo\controller.js" />
     <Content Include="ScriptsKendo\helpers.js" />
     <Content Include="ScriptsKendo\http-requester_old.js" />
@@ -96,6 +96,10 @@
     <Content Include="Styles\kendo.common.min_old.css" />
     <Content Include="Styles\kendo.default.min.css" />
     <Content Include="Styles\kendo.default.min_old.css" />
+    <Content Include="Styles\kendo.highcontrast.min.css" />
+    <Content Include="Styles\kendo.metro.min.css" />
+    <Content Include="Styles\kendo.moonlight.min.css" />
+    <Content Include="Styles\kendo.rtl.min.css" />
     <Content Include="Styles\KendoBlueOpal.css" />
     <Content Include="Styles\Style.css" />
     <Content Include="UserControls\ActiveGame.html" />
