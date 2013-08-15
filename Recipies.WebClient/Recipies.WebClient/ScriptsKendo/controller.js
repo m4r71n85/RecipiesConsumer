@@ -164,32 +164,20 @@ var controllers = (function () {
 
             // load the window for the detailed view on the select recipie
             $('#grid').on('click', 'tr', function () {
-
+            	
                 var recipieId = parseInt(
-		        $(this).first().text());
-
-                self.provider.recipie.getRecipie(3).then(function (result) {
-                    createKendoWindow("Recipie" + recipieId, "ViewRecipie").center().open();
-
-                    var commentsGrid = $("#commentsGrid").kendoGrid({
-
-                        columns: [
-                            { field: "Text", title: "Text", width: "100px" },
-                           { field: "CreatedBy", title: "Created By", width: "100px" }
-                        ],
-                        dataSource: {
-                            transport: {
-                                read: "http://localhost:54081/api/recipies",
-                            },
-                            pageSize: 2
-                        },
-                        height: 200,
-                        pageable: true,
-                        scrollable: true,
-                        selectable: "row",
-
-                    });
-                    console.log("created:", result);
+		        $(this).children("td").first().text());
+                createKendoWindow("Show recepie details", "ShowRecipie").center().open();
+                self.provider.recipie.getRecipie(recipieId).then(function (result) {
+                	var popup = $("#show_recepie");
+                	popup.children(".username").html(result.CreatedBy);
+                	popup.children(".recepie_name").html(result.Name);
+                	popup.children(".recepie_minutes").html(result.CookingMinutes);
+                	popup.children(".recepie_description").html(result.Description);
+                	popup.children("img").attr('src', result.ImagesFolder);
+                	popup.children(".rating").html(result.Rating);
+                	popup.children(".steps").html(result.Steps);
+                	popup.children("img").html(result.Steps);
                 }, function (error) {
                     alert(error.responseText);
                 });
