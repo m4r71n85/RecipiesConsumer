@@ -102,8 +102,8 @@
     <Content Include="Styles\kendo.rtl.min.css" />
     <Content Include="Styles\KendoBlueOpal.css" />
     <Content Include="Styles\Style.css" />
-    <Content Include="UserControls\ActiveGame.html" />
-    <Content Include="UserControls\CreateGame.html" />
+    <Content Include="UserControls\ViewRecipie.html" />
+    <Content Include="UserControls\CreateRecipie.html" />
     <Content Include="UserControls\JoinGame.html" />
     <Content Include="UserControls\Login.html" />
     <Content Include="Web.config" />
