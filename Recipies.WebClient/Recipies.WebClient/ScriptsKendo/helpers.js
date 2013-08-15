@@ -18,12 +18,12 @@ function createKendoWindow(title, content) {
     return kwindow.data('kendoWindow');
 }
 
-function createGameWindow(title, gameId) {
-    var kwindow = $('<div id=' + gameId + '>').attr('tag', 5).kendoWindow({
+function createrecipieWindow(title, recipieId) {
+    var kwindow = $('<div id=' + recipieId + '>').attr('tag', 5).kendoWindow({
         title: title,
         width: '520px',
         height: '400px',
-        content: '../UserControls/ActiveGame.html',
+        content: '../UserControls/Activerecipie.html',
     });
     return kwindow;//.data('kendoWindow');
     //http://jsfiddle.net/dimodi/8tzgc/

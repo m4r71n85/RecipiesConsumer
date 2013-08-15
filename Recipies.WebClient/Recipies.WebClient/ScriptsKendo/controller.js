@@ -11,24 +11,41 @@ var controllers = (function () {
         init: function () {
             this.provider = providers.get(rootUrl);
 
-            //if (this.provider.isUserLoggedIn()) {
-            //    this.loadGame("#panelbar");
-            //}
-            //else {
-            //    this.loadLogin("#kwindow");
-            //}
-
-            if (true) {
-                this.loadGame("#panelbar");
+            if (this.provider.isUserLoggedIn()) {
+                this.loadrecipie("#panelbar");
+            }
+            else {
+                this.loadLogin("#kwindow");
             }
         },
         loadLogin: function (selector) {
             this.attachLoginEventHandlers(selector);
             createKendoWindow("Login / Register", "Login").open();
+            $("#userNickname").html("stranger");
+            $("#LogBtn").html("Sign in");
+            $("#LogBtn").on("click", function () {
+                
+                    location.reload();
+               
+            });
         },
-        loadGame: function () {
-            this.attachGameEventHandlers("#kwindow");
+        loadrecipie: function () {
+            var self = this;
+            this.attachRecipieEventHandlers("#kwindow");
+            $("#userNickname").html(this.provider.nickname());
+            $("#LogBtn").on("click", function () {
+                self.provider.user.logout().then(function (result) {
 
+                    console.log("created:", result);
+                    location.reload();
+                }, function (error) {
+                    alert(error.responseText);
+                });
+            });
+
+            $("#LogBtn").html("LogOut");
+
+           
             //this.loadMessages();
         },
 
@@ -40,7 +57,7 @@ var controllers = (function () {
                 var password = $('#txtLoginPassword').val();
                 self.provider.user.login(username, password).then(function () {
                     kwindow.data("kendoWindow").close();
-                    self.loadGame("#panelbar");
+                    self.loadrecipie("#panelbar");
                 });
             });
 
@@ -50,25 +67,14 @@ var controllers = (function () {
                 var password = $('#txtRegisterPassword').val();
                 self.provider.user.register(username, nickname, password).then(function () {
                     kwindow.data("kendoWindow").close();
-                    self.loadGame("#panelbar");
+                    self.loadrecipie("#panelbar");
                 });
             });
         },
-        attachGameEventHandlers: function (selector) {
+        attachRecipieEventHandlers: function (selector) {
             var self = this;
             var kwindow = $(selector);
-            var recipi
-            //kwindow.on('click', '#btnJoinGame', function () {
-            //    var password = $('#txtJoinGamePassword').val();
-            //    var number = $('#txtJoinGameNumber').val();
-            //    self.provider.game.join(selectedGameId, password, number).then(function (result) {
-            //        kwindow.data("kendoWindow").close();
-            //        var item = panelBar.getItemById(selectedGameId);
-            //    }, function (error) {
-            //        alert(error.responseText);
-            //    });
-            //});
-
+           
             //ADD Step to the new recipie
             kwindow.on('click', '#btnAddStep', function () {
                 $('#addedSteps').append($("<p>" + '|Step| <span class="step">' + $('#txtCreateRecipieStep').val() + '</span> ||Time| <span class="time">' + $('#txtCreateRecipieStepTime').val().trim() + "</span></p>"));
@@ -104,10 +110,10 @@ var controllers = (function () {
                 }
 
 
-                self.provider.game.create(name, description, stepsCollection, imageUrl).then(function (result) {
+                self.provider.recipie.create(name, description, stepsCollection, imageUrl).then(function (result) {
                     kwindow.data("kendoWindow").close();
                     //var data = {
-                    //    message: "new-game",
+                    //    message: "new-recipie",
                     //    user: self.provider.nickname()
                     //};
                     //pubnubPublish(data);
@@ -123,10 +129,10 @@ var controllers = (function () {
 
                 var commentOnRecipie = $('#commentOnRecipie').val();
 
-                self.provider.game.addComment(recipieId, commentOnRecipie).then(function (result) {
+                self.provider.recipie.addComment(recipieId, commentOnRecipie).then(function (result) {
 
                     //var data = {
-                    //    message: "new-game",
+                    //    message: "new-recipie",
                     //    user: self.provider.nickname()
                     //};
                     //pubnubPublish(data);
@@ -158,7 +164,7 @@ var controllers = (function () {
                 var recipieId = parseInt(
 		        $(this).first().text());
 
-                self.provider.game.getRecipie(3).then(function (result) {
+                self.provider.recipie.getRecipie(3).then(function (result) {
                     createKendoWindow("Recipie" + recipieId, "ViewRecipie").center().open();
 
                     var commentsGrid = $("#commentsGrid").kendoGrid({

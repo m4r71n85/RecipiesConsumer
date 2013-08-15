@@ -1,6 +1,6 @@
 ﻿var notify = (function () {
 
-    var create = function (title, gameId, type, state, panelItem, nofyType) {
+    var create = function (title, recipieId, type, state, panelItem, nofyType) {
         //$.noty.returns = 'id'; // BC for old api
 
         var buttons;
@@ -12,20 +12,20 @@
                     type: 'btn btn-primary',
                     text: 'Ok',
                     click: function($noty) {
-                        var item = findById(games, gameId);
-                        if (type === "game-joined" || item.status === "full") {
+                        var item = findById(recipies, recipieId);
+                        if (type === "recipie-joined" || item.status === "full") {
                             if (item === undefined) {
                                 item = {
-                                    id: gameId,
-                                    title: title.substring(title.indexOf('joined your game ') + 17, title.indexOf('<br />')),
+                                    id: recipieId,
+                                    title: title.substring(title.indexOf('joined your recipie ') + 17, title.indexOf('<br />')),
                                     creatorNickname: controller.provider.nickname,
                                     status: "in-progress"
                                 };
-                                games.push(item);
+                                recipies.push(item);
                             }
-                            controller.provider.game.start(gameId).then(function() {
+                            controller.provider.recipie.start(recipieId).then(function() {
                                 noty({ force: true, text: 'Have fun :)', type: 'success', layout: 'topRight', timeout: 1000 });
-                                createGameWindow("Active Game: " + item.title, item.id).center().open();
+                                createrecipieWindow("Active recipie: " + item.title, item.id).center().open();
                                 var panelGroup = getItemByIndex(2);
                                 if (panelItem !== undefined && panelItem !== null) {
                                     panelBar.remove(panelItem, panelBar.select());
@@ -39,7 +39,7 @@
                             });
                         } else if (item.status == "in-progress") {
                             noty({ force: true, text: 'Have fun :)', type: 'success', layout: 'topRight', timeout: 1000 });
-                            createGameWindow("Active Game: " + item.title, item.id).center().open();
+                            createrecipieWindow("Active recipie: " + item.title, item.id).center().open();
                         } else if (type === "guess-made") {
 
                         }

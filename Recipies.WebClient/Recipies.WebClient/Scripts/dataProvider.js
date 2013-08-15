@@ -4,12 +4,12 @@
 /// <reference path="sha1.js" />
 
 var providers = (function () {
-    var nickname = "pesho"//localStorage.getItem("nickname");
-    var sessionKey = "D743981A9002BAB63E0A229E6C7BAF51EEC5AE10";
+    var nickname = localStorage.getItem("nickname");
+    var sessionKey = localStorage.getItem("sessionKey");
 
     function saveSession(userData) {
-        localStorage.setItem("nickname", userData.nickname);
-        localStorage.setItem("sessionKey", userData.sessionKey);
+        localStorage.setItem("nickname", userData.NickName);
+        localStorage.setItem("sessionKey", userData.SessionKey);
         nickname = userData.nickname;
         sessionKey = userData.sessionKey;
     }
@@ -25,7 +25,7 @@ var providers = (function () {
         init: function (serviceUrl) {
             this.serviceUrl = serviceUrl;
             this.user = new UserProvider(this.serviceUrl);
-            this.game = new RecipieProvider(this.serviceUrl);
+            this.recipie = new RecipieProvider(this.serviceUrl);
 
         },
         isUserLoggedIn: function () {
@@ -41,37 +41,45 @@ var providers = (function () {
             this.serviceUrl = serviceUrl + "users";
         },
         login: function (username, password) {
-            var url = this.serviceUrl + "login";
+            var url = this.serviceUrl + "?login=true";
             var userData = {
-                username: username,
-                authCode: CryptoJS.SHA1(password).toString()
+                UserName: username,
+                AuthCode: CryptoJS.SHA1(username,password).toString()
             };
 
             return httpRequester.postJSON(url, userData).then(function (result) {
+                result.NickName = nickname;
                 saveSession(result);
+                location.reload();
             }, function (error) {
                 console.log(error.responseText);
             });
         },
         register: function (username, nickname, password) {
-            var url = this.serviceUrl + "register";
+            var url = this.serviceUrl;
             var userData = {
-                username: username,
-                nickname: nickname,
-                authCode: CryptoJS.SHA1(password).toString()
+                UserName: username,
+                NickName: nickname,
+                AuthCode: CryptoJS.SHA1(username, password).toString()
             };
             return httpRequester.postJSON(url, userData).then(function (result) {
+                result.NickName = nickname;
                 saveSession(result);
+                
+                location.reload();
             }, function (error) {
                 console.log(error.responseText);
             });
         },
         logout: function (success, error) {
-            var url = this.serviceUrl + "logout/" + sessionKey;
-            httpRequester.getJSON(url, function (data) {
-                clearSession();
-                success(data);
-            }, error);
+            var url = this.serviceUrl + "?sessionKey=" + sessionKey;
+            var userData = {
+            };
+            return httpRequester.postJSON(url, userData).then(function (result) {
+                clearSession(result);
+            }, function (error) {
+                console.log(error.responseText);
+            });
         }
     });
 
@@ -94,11 +102,11 @@ var providers = (function () {
             return httpRequester.postJSON(url, data);
         },
 
-        getRecipie: function (gameId) {
-            return httpRequester.getJSON(this.serviceUrl + "/" + gameId);
+        getRecipie: function (recipieId) {
+            return httpRequester.getJSON(this.serviceUrl + "/" + recipieId);
         },
 
-        allRecipies: function (gameId) {
+        allRecipies: function (recipieId) {
             return httpRequester.getJSON(this.serviceUrl);
         }
     });

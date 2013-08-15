@@ -41,9 +41,9 @@
         pubnub.subscribe({
             channel: "saykor_bulls_cows",
             message: function (m) {
-                if (m.message === "new-game") {
+                if (m.message === "new-recipie") {
                     if (m.user !== controller.provider.nickname()) {
-                        controller.loadOpenGames();
+                        controller.loadOpenrecipies();
                     }
                 }
             },
@@ -55,10 +55,14 @@
 <body>
     <div id="wrapper" class="k-content">
         <div id="kwindow"></div>
+        <div id="logInfo">
+            <p>Hello, <span id="userNickname"></span></p>
+            <button id="LogBtn"></button>
+        </div>
          <div id="grid">
                 
             </div>
-         <button id="btnCreateNewRecipie">Create New Game</button>
+         <button id="btnCreateNewRecipie">Create New Recipie</button>
 
     </div>
 </body>
