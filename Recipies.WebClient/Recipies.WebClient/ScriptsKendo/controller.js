@@ -6,7 +6,7 @@
 /// <reference path="notify.js" />
 
 var controllers = (function () {
-    var rootUrl = "http://localhost:54081/api/";
+	var rootUrl = "http://recepies-1.apphb.com/";
 	var Controller = Class.create({
 		init: function () {
 		    this.provider = providers.get(rootUrl);

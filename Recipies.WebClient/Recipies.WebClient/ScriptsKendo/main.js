@@ -36,7 +36,7 @@ $(document).ready(function() {
         ],
         dataSource: {
             transport: {
-                read: "http://localhost:54081/api/recipies",
+            	read: "http://recepies-1.apphb.com/api/recipies",
                 pageSize: 5
             },
             width: 350,
