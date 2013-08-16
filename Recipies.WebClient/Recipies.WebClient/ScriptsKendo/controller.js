@@ -168,7 +168,7 @@ var controllers = (function () {
             	
                 var recipieId = parseInt(
 		        $(this).children("td").first().text());
-                createKendoWindow("Show recepie details", "ShowRecipie").center().open();
+                var showRecipieWindow = createKendoWindow("Show recepie details", "ShowRecipie").center().open();
                 self.provider.recipie.getRecipie(recipieId).then(function (result) {
                 	var popup = $("#show_recepie");
                 	popup.children(".username").html(result.CreatedBy);
@@ -179,6 +179,7 @@ var controllers = (function () {
                 	popup.children(".rating").html(result.Rating);
                 	popup.children(".steps").html(result.Steps);
                 	popup.children("img").html(result.Steps);
+                	showRecipieWindow.center();
                 }, function (error) {
                     alert(error.responseText);
                 });

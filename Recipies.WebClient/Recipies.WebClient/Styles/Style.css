@@ -36,3 +36,10 @@
 #pnlListTurns {
     font-size: 0.8em;
 }
+.rating {
+	border: 1px solid #787878;
+	border-radius: 20px;
+    font-size: 1.3em;
+	margin: 10px;
+	padding: 5px 10px;
+}
